@@ -1,0 +1,78 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Car Insurance{% endblock %}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'insurance/styles.css' %}">
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div>
+              <ul class="navbar-nav mr-auto">
+                <img src="{% static 'insurance\images\1.jpg' %}" class="custom-size" id="symbol" alt="car_insurance">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <h4 id="welcome"><strong>Welcome {{ user.username }}!</strong></h4>
+                    </li>
+                    <li class="nav-item">
+                        <a class="navbar-brand" href="{% url 'index' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="navbar-brand" href="{% url 'profile' user_id=user.id %}">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="navbar-brand" href="{% url 'logout' %}">Log Out</a>
+                    </li>
+                    {% if user.is_superuser %}
+                        <li class="nav-item">
+                            <a class="navbar-brand" href="{% url 'upload_post' %}">Upload Post</a>
+                        </li>
+                    {% endif %}
+                {% else %}
+                    <li class="nav-item">
+                        <a class="navbar-brand" href="{% url 'login' %}">Log In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="navbar-brand" href="{% url 'register' %}">Register</a>
+                    </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="navbar-brand" href="#contact">Contact Us</a>
+                </li>
+              </ul>
+            </div>
+        </nav>
+        
+        <div class="body">
+            {% block body %}
+            {% endblock %}
+        </div>
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <footer id="contact">
+                <p class="navbar-brand">Contact Us:</p>
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <img src="{% static 'insurance\images\mail.jpg' %}" id="icon" alt="">
+                        <a class="navbar-brand" href="mailto:admin@email.com">admin@email.com</a>
+                    </li>
+                    <li class="nav-item">
+                        <img src="{% static 'insurance\images\phone.jpg' %}" id="icon" alt="">
+                        <div class="navbar-brand">Phone Number: 0123456789</div>
+                    </li>
+                    <li class="nav-item">
+                        <img src="{% static 'insurance\images\address.jpg' %}" id="icon" alt="">
+                        <div class="navbar-brand">Address: no.3 str.122</div>
+                    </li>
+                    <li class="nav-item">
+                        <img src="{% static 'insurance\images\post.jpg' %}" id="icon" alt="">
+                        <div class="navbar-brand">ZipCode: 012345</div>
+                    </li>
+                </ul>
+            </footer>
+        </nav>
+
+    </body>
+</html>

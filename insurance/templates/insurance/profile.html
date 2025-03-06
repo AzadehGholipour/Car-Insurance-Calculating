@@ -1,0 +1,40 @@
+{% extends "insurance/layout.html" %}
+
+{% block body %}
+
+    <h3 class="titre">Personal Information</h3>
+
+    {% if user.is_authenticated %}
+        <form action="{% url 'profile' user_id=user_id %}" method="post">
+            {% csrf_token %}
+            <div class="row">
+                <label for="f_name">First Name:</label>
+                    <input class="col-4" id="f_name" placeholder="first name" name="f_name" value="{{ first_name }}"/>
+                <label for="l_name">Last Name:</label>
+                    <input class="col-4" id="l_name" placeholder="last name" name="l_name" value="{{ last_name }}"/>
+            </div>
+            <div class="row">
+                <label for="id_num">ID Number:</label>
+                    <input class="col-2" id="id_num" placeholder="ID number" name="id_num" value="{{ id_number }}"/>
+                <label for="date_of_birth">Date Of Birth:</label>
+                    <input class="col-2" id="date_of_birth" placeholder="yyyy-mm-dd" name="date_of_birth" value="{{ date_of_birth }}"/>
+                <label for="dl_num">Driving License Number:</label>
+                    <input class="col-2" id="dl_num" placeholder="DL number" name="dl_num" value="{{ dl_number }}"/>
+            </div>
+            <div class="row">
+                <label for="username">UserName:</label>
+                    <input class="col-4" id="username" placeholder="username" name="username" value="{{ username }}"/>
+                <label for="email">Email:</label>
+                    <input class="col-4" id="email" placeholder="email" name="email" value="{{ email }}"/>
+            </div>
+            <input type="submit" id="save" value="Save Profile" class="btn btn-primary">
+        </form>
+
+        {% if message %}
+            <div class="alert alert-warning" role="alert" id="alert">
+                {{ message }}
+            </div>
+        {% endif %}
+    {% endif %}
+
+{% endblock %}

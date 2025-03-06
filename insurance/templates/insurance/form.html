@@ -1,0 +1,79 @@
+{% extends "insurance/layout.html" %}
+
+{% block body %}
+
+    <h3 class="titre">Car Insurance application form</h3>
+
+    <form action="{% url 'save_application' %}" method="post">
+        {% csrf_token %}   
+        <div class="container">   
+            <div>
+                <label for="cost">How much is your car worth:  $</label>
+                    <input id="cost" placeholder="Cost of Car" name="cost"/>
+            </div>
+            <div>
+                <label for="noclaim">No-Claims Discount:</label>
+                    <select id="noclaim" name="noclaim">
+                        <option value="">--Select--</option>
+                        <option value="one_y">1 Year</option>
+                        <option value="two_y">2 Years</option>
+                        <option value="three_y">3 Years</option>
+                        <option value="four_y">4 Years and more</option>
+                    </select>
+            </div>
+            <div>
+                <label class="row">Optional Coverages:
+                    <label class="col-2">
+                        <input type="checkbox" id="fire" name="fire" value="fire">Fire</label>
+                    <label class="col-2">
+                        <input type="checkbox" id="theft" name="theft" value="theft">Theft</label>
+                    <label class="col-4">
+                        <input type="checkbox" id="natural_disaster" name="natural_disaster" value="natural disaster">Natural Disaster</label>
+                </label>
+            </div>
+            <div class="row">
+                <button type="button" class="btn btn-primary" id="calculate" onclick="calculatePremium()">Calculate Premium</button>
+                <label for="premium" class="me-2"><strong>The Premium is: $ </strong></label>
+                <h5 class="me-2" id="premium" name="premium"></h5>
+            </div>
+            <div>
+                <button type="button" class="btn btn-primary" id="apply" onclick="load_form()">Applicattion Form</button>
+            </div>
+
+            {% if user.is_authenticated %}
+                <span id="form-view">
+                    <div class="row">
+                        <label class="col-2" for="carName">Car Name: </label>
+                            <select id="carName" name="carName" onchange="updateCarSeriesDropdown()">
+                                <option value="">--Select--</option>
+                                <option value="bmw">BMW</option>
+                                <option value="peugeot">Peugeot</option>
+                                <option value="ford">Ford</option>
+                                <option value="honda">Honda</option>
+                            </select>
+                        
+                        <label class="col-2" for="carSeries">Car Series: </label>
+                            <select id="carSeries" name="carSeries">
+                                <option value="">--Select--</option>
+                            </select>
+                        <label class="col-2" for="year">Year:</label>
+                                <input id="year" name="year" class="col-2"/>
+                    </div>
+                    <div class="row">
+                        <label for="license">License Plate:</label>
+                            <input id="license" name="license" class="col-5"/>
+                    </div>
+                    <div class="row">
+                        <label for="VIN">VIN:</label>
+                            <input id="VIN" name="VIN" class="col-5"/>
+                    </div>
+
+                    <input type="submit" id="save" value="Send Applicattion" class="btn btn-primary"/>
+                </span>
+            {% endif %}
+        </div>
+    </form>
+
+    <script src="\static\insurance\index.js"></script>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "insurance/layout.html" %}
+{% load static %}
+
+{% block body %}
+    {% if user.is_authenticated %}
+        <div>
+            <form action="{% url 'upload_post' %}" enctype="multipart/form-data" method="post">
+                {% csrf_token %}
+                <div class="container">   
+                    <div>
+                        <label for="title">Title: </label>
+                        <input id="post" placeholder="title" name="title"/>
+                    </div>
+                    <div>
+                        <label for="content">Content: </label>
+                        <textarea id="post" placeholder="content" name="content"></textarea>
+                    </div>
+                    <div>
+                        <label for="image">Upload the image:</label>
+                        <input type="file" id="image" name="image" accept="image/*">
+                    </div>
+                    <div>
+                        <input type="submit" class="btn btn-primary" id="save_post" value="Upload Post"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    {% endif %}
+{% endblock %}

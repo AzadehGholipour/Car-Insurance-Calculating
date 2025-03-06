@@ -1,0 +1,71 @@
+{% extends "insurance/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+  <h3 class="col-sm">Click <a href="{% url 'form' %}"><strong>here</strong></a> to calculate your car insurance</h3>
+  {% if message %}
+      <div class="alert alert-success" role="alert" id="alert">
+          {{ message }}
+      </div>
+  {% endif %}
+     
+  <script>
+    function loadPosts() {
+      fetch('/posts')
+        .then(response => response.json())
+        .then(data => {
+          const posts = data.posts;
+          let index = 0;
+
+          function showNextPost() {
+            if (index < posts.length) {
+              add_post(posts[index]);
+              index += 1;
+              setTimeout(showNextPost, 1500);
+            }
+          }
+                            
+          showNextPost();
+                
+            })
+            .catch(error => {
+                console.error("Error fetching posts:", error);
+            });
+      };
+
+
+    function add_post(new_post) {
+        const postElement = document.createElement('div');
+        postElement.className = 'post';
+        postElement.innerHTML = `
+          <div id="posts">
+            <div id="animationPost">
+              <div id="information-right" class="card mb-3">
+                <div class="row g-0">
+                  <div class="col-md-4">
+                    <img src="${ new_post.image }" class="img-fluid rounded-start" alt="car_insurance">
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title">${ new_post.title }</h5>
+                      <p class="card-text">
+                        ${ new_post.content }
+                      </p>
+                      <p class="post_date">${ new_post.date_of_upload }</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        document.querySelector('#posts').append(postElement);
+    };
+    window.onload = loadPosts;    
+  </script>
+
+  <div id="posts">
+  </div>
+
+{% endblock %}
